@@ -1,0 +1,79 @@
+{% extends 'layouts.html' %}
+
+{% block main %}
+    <div class ="row">
+      <div class="col-md-4">
+        <div class="card ">
+          <div class="card-header ">
+            <h5 class="card-title">Review Statistics</h5>
+            <p class="card-category">Analysis based on User Reviews</p>
+          </div>
+          <div class="card-body ">
+            <canvas id="chartEmail" class="ct-chart ct-perfect-fourth" width="456" height="300"></canvas>
+          </div>
+          <div class="card-footer ">
+            <hr>
+            <div class="stats">
+              <i class="fa fa-calendar"></i> Number of reviews: {{ reviews|length }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title"> Trend Analysis </h5>
+            <p class="card-category"> Changing public opinion with time </p>
+          </div>
+          <div class="card-body">
+            <canvas id="activeUsers" class="ct-chart ct-perfect-fourth" width="456" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-12">
+      <div class="card card-plain">
+        <div class="card-header text-center">
+          <h4 class="card-title"> User Reviews </h4>
+          <p class="card-category"> Here's what people thinks!!!</p>
+        </div>
+        <div class="card-body">
+            <table class="table">
+              <thead class="text-center">
+                <th>
+                  Review
+                </th>
+                <th class="text-right">
+                  Trust Status
+                </th>
+              </thead>
+              <tbody>
+                  {% if reviews %}
+                      {% for review in reviews %}
+                        <tr>
+                          <td> <b> {{ review[0]['title'] }} </b> - {{ review[0]['text'] }}</td>
+                          <td class="text-right">
+                            {% if review[0]['polarity'] %}
+                              {% if review[0]['polarity'] > 0 %}
+                                Positive
+                              {% elif review[0]['polarity'] < 0 %}
+                                Negative
+                              {% else %}
+                                Neutral
+                              {% endif %}
+                            {% else %}
+                              Not Calculated
+                            {% endif %}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                  {% endif %}
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+{% endblock %}

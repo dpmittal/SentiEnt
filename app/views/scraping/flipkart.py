@@ -44,8 +44,8 @@ def getReviews(pid):
         values = [r[0],r[2],r[1],r[4],r[3]]
         data.append([dict(zip(keys,values))])
 
-    reviews = {"results": data}
-    return jsonify(reviews)
+    reviews = data
+    return render_template('reviews.html', **locals())
 
 
 @flipkart.route("results/<string:q>", methods=['POST', 'GET'])
@@ -78,7 +78,4 @@ def getResults(q):
             trust_value.append(round(tv[0][0],2))
 
     data = zip(p_name,p_id,p_url,trust_value)
-
     return render_template('flipkart.html',**locals())
-
-

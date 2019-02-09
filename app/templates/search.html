@@ -1,0 +1,23 @@
+{% extends 'layouts.html' %}
+
+{% block main %}
+<form action="{{ url_for('main.search') }}" method="post">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="card-title"> Search </h4>
+    </div>
+    <div class="card-body">
+      <div class="col-md-6">
+        <div class="input-group no-border">
+          <input type="text" name="search_query" class="form-control" placeholder="Enter Product Name or Category...">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <i class="nc-icon nc-zoom-split" type="submit"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

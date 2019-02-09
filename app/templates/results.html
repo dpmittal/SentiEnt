@@ -1,0 +1,54 @@
+{% extends 'layouts.html' %}
+
+{% block main %}
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title"> Search results for '{{query}}' </h4>
+    </div>
+    <div class="card-body">
+        <table class="table">
+          <thead class="">
+            <tr>
+              <th></th>
+              <th class="text-center">
+                Product
+              </th>
+              <th></th>
+              <th></th>
+              <th class="text-right">
+                Reviews
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if results %}
+                {% for name,pid,url in data %}
+                <tr>
+                  <td>
+                  </td>
+                  <td class="text-center">
+                    <a href="{{url_for('flipkart.getReviews',pid=pid)}}">{{name}}</a>
+                    <br>
+                    <small><a href="{{ url }}">Product Link : </a><br><br></small>
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                  </td>
+                  <td class="text-right">
+                    <small>Positive</small> 90 <br>
+                    <small>Negative</small> 90 <br>
+                    <small>Neutral</small> 90 <br>
+                  </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div
+
+{% endblock %}
