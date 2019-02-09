@@ -90,6 +90,11 @@ def getResults(q):
             execute_db("INSERT INTO products(pid,name,url) VALUES (%s,%s,%s)",(id,s['name'],s['url'],))
             saveReviews(id)
 
+        polarity=query_db("SELECT polarity from reviews WHERE pid=%s", (id,))
+        polarities = []
+        for review in polarity:
+             for poles in review:
+                polarities.append(round(poles, 4))
         tv = query_db("SELECT AVG(polarity) FROM reviews WHERE pid=%s",(id,))
         if tv[0][0] is not None:
             trust_value.append(round(tv[0][0],2))

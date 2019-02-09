@@ -17,7 +17,7 @@
               <th></th>
               <th></th>
               <th class="text-right">
-                Reviews
+                Positive Reviews
               </th>
             </tr>
           </thead>
@@ -35,10 +35,13 @@
                   </td>
                   <td>
                   </td>
-                  <td class="text-right">
-                    <small>Positive</small> 90 <br>
-                    <small>Negative</small> 90 <br>
-                    <small>Neutral</small> 90 <br>
+                  <td class="text-right"> <b>
+                    {% if polarities[i] >=0 %}
+                    {{polarities[i] *100}}% <br>
+                    {% else %}
+                    {{100- polarities[i]*100}}%
+                    {% endif %}
+                  </b>
                   </td>
                 </tr>
                 {% endfor %}
