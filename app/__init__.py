@@ -3,7 +3,6 @@ from flask import Flask, request, render_template, flash, redirect, url_for, ses
 from tempfile import mkdtemp
 import psycopg2
 from flask_session import Session
-from flask_migrate import Migrate
 from functools import wraps
 import requests
 import json
@@ -15,6 +14,7 @@ app.config['SESSION_FILE_DIR'] = mkdtemp()
 Session(app)
 con = psycopg2.connect(dbname=app.config['DBNAME'],user=app.config['DBUSER'],host=app.config['HOST'],password=app.config['PASSWORD'])
 
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=app.config['DBUSER'],pw=app.config['PASSWORD'],url=app.config['URL'],db='flask')
 
 def execute_db(query,args=()):
     cur = con.cursor()
