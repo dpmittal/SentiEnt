@@ -4,7 +4,8 @@ from app import *
 import requests
 from bs4 import BeautifulSoup
 import json
-
+from textblob import TextBlob
+from .main import saveReviews
 
 flipkart = Blueprint('flipkart', __name__,url_prefix='/scrap/flipkart')
 
@@ -27,10 +28,12 @@ def getReviews(pid):
             string = json.loads(string)
             string = string['readReviewsPage']['reviewsData']['product_review_page_default_1']['data']
             for s in string:
-                execute_db("INSERT INTO reviews(pid,text,title,date) VALUES (%s,%s,%s,%s)",(
+                blob = TextBlob(s['value']['text'])
+                execute_db("INSERT INTO reviews(pid,text,title,polarity,date) VALUES (%s,%s,%s,%s,%s)",(
                     pid,
                     s['value']['text'],
                     s['value']['title'],
+                    blob.sentiment.polarity,
                     s['value']['created'],
                 ))
     data =[]
@@ -51,6 +54,7 @@ def getResults(q):
     p_name=[]
     p_url=[]
     p_id=[]
+    trust_value=[]
     page = requests.get('https://www.flipkart.com/search?q='+q)
     soup = BeautifulSoup(page.text, 'html.parser')
     string = soup.find('script', {'id':'jsonLD'}).text
@@ -67,8 +71,13 @@ def getResults(q):
         products_chk = query_db("SELECT pid from products WHERE pid=%s", (id,))
         if not products_chk:
             execute_db("INSERT INTO products(pid,name,url) VALUES (%s,%s,%s)",(id,s['name'],s['url'],))
+            saveReviews(id)
 
-    data = zip(p_name,p_id,p_url)
+        tv = query_db("SELECT AVG(polarity) FROM reviews WHERE pid=%s",(id,))
+        if tv:
+            trust_value.append(round(tv[0][0],2))
+
+    data = zip(p_name,p_id,p_url,trust_value)
 
     return render_template('flipkart.html',**locals())
 
