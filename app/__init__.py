@@ -48,6 +48,8 @@ def admin_required(f):
 # Importing Blueprints
 from app.views.main import main
 from app.views.scraping.flipkart import flipkart
+from app.views.scraping.amazon import amazon
 # Registering Blueprints
 app.register_blueprint(main)
 app.register_blueprint(flipkart)
+app.register_blueprint(amazon)
