@@ -8,24 +8,45 @@ import json
 
 amazon = Blueprint('amazon', __name__ ,url_prefix='/scrap/amazon')
 
-
 @amazon.route("reviews/<string:pid>", methods=['POST', 'GET'])
 def getReviews(pid):
+    reviews=True
     reviews_text =[]
     reviews_title=[]
     for i in range(1):
-        page = requests.get('https://www.amazon.in/product-reviews/'+pid+'?pageNumber='+str(i))
+        page = requests.get('https://www.amazon.in/q/product-reviews/'+pid+'?pageNumber='+str(i))
         soup = BeautifulSoup(page.text, 'html.parser')
-        test=soup.prettify()
-        # pos1 = int(str(soup).find('\"readReviewsPage\":'))
-        # pos2 = int(str(soup).find('\"recentlyViewed\"'))
-        # string = '{'+str(soup)[pos1:pos2]+'}rk'
-        # string = string.replace("}}},}rk","}}}}")
-        # string = json.loads(string)
-        # string = string['readReviewsPage']['reviewsData']['product_review_page_default_1']['data']
-        # for s in string:
-        #     reviews_title.append(s['value']['title'])
-        #     reviews_text.append(s['value']['text'])
+        temp_title = soup.find_all('a', {'data-hook':'review-title'})
+        temp_text = soup.find_all('span',{'data-hook':'review-body'})
 
-    # reviews= zip(reviews_title,reviews_text)
+        for t in temp_title:
+            reviews_title.append(t.text)
+        for t in temp_text:
+            reviews_text.append(t.text)
+
+        data = zip(reviews_title,reviews_text)
+
+    return render_template("amazon.html",**locals())
+
+
+
+@amazon.route("results/<string:q>", methods=['POST', 'GET'])
+def getResults(q):
+    results=True
+    results_url =[]
+    results_title=[]
+    # https://www.scraperapi.com/
+    payload = {'key': '21ed92d5169cc1932533d3d67ce76259', 'url':'https://amazon.in'}
+    page = requests.get('http://amazon.in/s/field-keywords='+q, params=payload)
+    soup = BeautifulSoup(page.text, 'html.parser')
+    test=soup.prettify()
+    temp_data = soup.find_all('a', {'class':'a-link-normal s-access-detail-page s-color-twister-title-link a-text-normal'})
+    # temp_text = soup.find_all('span',{'data-hook':'review-body'})
+
+    for t in temp_data:
+        results_title.append(t.attrs['title'])
+        results_url.append(t.attrs['href'])
+
+    data = zip(results_title,results_url)
+
     return render_template("amazon.html",**locals())

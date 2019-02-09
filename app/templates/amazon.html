@@ -1,1 +1,15 @@
-{{test}}
+{%if reviews %}
+
+{% for title,text in data %}
+<b>{{title}}</b><br>
+{{text}}<br><br>
+{% endfor%}
+
+{% endif %}
+
+{% if results %}
+{% for title,url in data %}
+    {{title}}<br>
+    {{url}}<br><br>
+{% endfor %}
+{% endif %}
