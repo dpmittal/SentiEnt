@@ -11,6 +11,4 @@ def index():
 
 @main.route("/search", methods=['POST', 'GET'])
 def search():
-    if request.method=="POST":
-        return redirect(url_for('flipkart.getResults', q=request.form['search_query']))
-    return render_template('search.html', **locals())
+    pass

@@ -1,0 +1,12 @@
+{% if review %}
+    {% for i,j,k in reviews %}
+        <ol>{{loop.index}}.
+        <b>{{i}}</b><br>
+        {{j}}<br><br>
+        {{k}}
+        </ol>
+    {% endfor %}
+{% endif %}
+
+
+
