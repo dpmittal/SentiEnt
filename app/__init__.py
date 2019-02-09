@@ -47,5 +47,7 @@ def admin_required(f):
     
 # Importing Blueprints
 from app.views.main import main
+from app.views.scraping.flipkart import flipkart
 # Registering Blueprints
 app.register_blueprint(main)
+app.register_blueprint(flipkart)
