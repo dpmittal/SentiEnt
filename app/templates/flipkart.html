@@ -1,6 +1,18 @@
-{% for i,j in reviews %}
+{% if review %}
+    {% for i,j in reviews %}
+        <ol>{{loop.index}}.
+        <b>{{i}}</b><br>
+        {{j}}<br><br>
+        </ol>
+    {% endfor %}
+{% endif %}
+
+
+{% if results %}
+    {% for name,pid,url in data %}
     <ol>{{loop.index}}.
-    <b>{{i}}</b><br>
-    {{j}}<br><br>
+    <b><a href="{{url_for('flipkart.getReviews',pid=pid)}}">{{name}}</a></b><br>
+    <a href="{{url}}">Product Link : </a><br><br>
     </ol>
-{% endfor %}
+    {% endfor %}
+{% endif %}

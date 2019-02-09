@@ -4,7 +4,6 @@ from app import *
 import requests
 from bs4 import BeautifulSoup
 import json
-import ast
 
 
 flipkart = Blueprint('flipkart', __name__,url_prefix='/scrap/flipkart')
@@ -12,6 +11,7 @@ flipkart = Blueprint('flipkart', __name__,url_prefix='/scrap/flipkart')
 
 @flipkart.route("reviews/<string:pid>", methods=['POST', 'GET'])
 def getReviews(pid):
+    review = True
     reviews_text =[]
     reviews_title=[]
     for i in range(1):
@@ -29,3 +29,29 @@ def getReviews(pid):
 
     reviews= zip(reviews_title,reviews_text)
     return render_template("flipkart.html",**locals())
+
+
+@flipkart.route("results/<string:q>", methods=['POST', 'GET'])
+def getResults(q):
+    results = True
+    p_name=[]
+    p_url=[]
+    p_id=[]
+    page = requests.get('https://www.flipkart.com/search?q='+q)
+    soup = BeautifulSoup(page.text, 'html.parser')
+    string = soup.find('script', {'id':'jsonLD'}).text
+    string = json.loads(string)
+    string = string['itemListElement']
+    for s in string:
+        p_name.append(s['name'])
+        p_url.append(s['url'])
+        pos1 = str(s['url']).find('?pid=')
+        pos2 = str(s['url']).find('&lid=')
+        id = str(s['url'])[pos1:pos2]
+        id = id.replace('?pid=','').replace('&lid=','')
+        p_id.append(id)
+    data = zip(p_name,p_id,p_url)
+
+    return render_template('flipkart.html',**locals())
+
+
