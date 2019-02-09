@@ -1,8 +1,9 @@
 {% if review %}
-    {% for i,j in reviews %}
+    {% for title,text,created in reviews %}
         <ol>{{loop.index}}.
-        <b>{{i}}</b><br>
-        {{j}}<br><br>
+        <b>{{title}}</b><br>
+        {{text}}<br>
+        <sub>{{created}}</sub><br><br>
         </ol>
     {% endfor %}
 {% endif %}

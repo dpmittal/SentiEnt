@@ -24,10 +24,8 @@ def execute_db(query,args=()):
 def query_db(query,args=(),one=False):
     cur = con.cursor()
     result=cur.execute(query,args)
-    if result>0:
-        values=cur.fetchall()
-        cur.close()
-        return values
+    values=cur.fetchall()
+    return values
 
 def login_required(f):
     @wraps(f)

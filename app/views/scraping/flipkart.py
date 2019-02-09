@@ -1,4 +1,4 @@
-from flask import Flask, request, flash, render_template, flash, redirect, url_for, session, Blueprint
+from flask import Flask, request, flash, render_template, flash, redirect, url_for, session, Blueprint,jsonify
 from flask_session import Session
 from app import *
 import requests
@@ -11,24 +11,38 @@ flipkart = Blueprint('flipkart', __name__,url_prefix='/scrap/flipkart')
 
 @flipkart.route("reviews/<string:pid>", methods=['POST', 'GET'])
 def getReviews(pid):
-    review = True
-    reviews_text =[]
-    reviews_title=[]
-    for i in range(1):
-        page = requests.get('https://www.flipkart.com/q/product-reviews/q?pid='+pid+'&page='+str(i))
-        soup = BeautifulSoup(page.text, 'html.parser')
-        pos1 = int(str(soup).find('\"readReviewsPage\":'))
-        pos2 = int(str(soup).find('\"recentlyViewed\"'))
-        string = '{'+str(soup)[pos1:pos2]+'}rk'
-        string = string.replace("}}},}rk","}}}}")
-        string = json.loads(string)
-        string = string['readReviewsPage']['reviewsData']['product_review_page_default_1']['data']
-        for s in string:
-            reviews_title.append(s['value']['title'])
-            reviews_text.append(s['value']['text'])
+    data = []
 
-    reviews= zip(reviews_title,reviews_text)
-    return render_template("flipkart.html",**locals())
+    products = query_db("SELECT * from products WHERE pid=%s", (pid,))
+    reviews = query_db("SELECT pid from reviews WHERE pid=%s", (pid,))
+
+    if not products or not reviews:
+        for _ in range(1):
+            page = requests.get('https://www.flipkart.com/q/product-reviews/q?pid='+pid)
+            soup = BeautifulSoup(page.text, 'html.parser')
+            pos1 = int(str(soup).find('\"readReviewsPage\":'))
+            pos2 = int(str(soup).find('\"recentlyViewed\"'))
+            string = '{'+str(soup)[pos1:pos2]+'}rk'
+            string = string.replace("}}},}rk","}}}}")
+            string = json.loads(string)
+            string = string['readReviewsPage']['reviewsData']['product_review_page_default_1']['data']
+            for s in string:
+                execute_db("INSERT INTO reviews(pid,text,title,date) VALUES (%s,%s,%s,%s)",(
+                    pid,
+                    s['value']['text'],
+                    s['value']['title'],
+                    s['value']['created'],
+                ))
+    data =[]
+
+    reviews = query_db("SELECT * from reviews WHERE pid=%s", (pid,))
+    for r in reviews:
+        keys=['pid','title','text','created','polarity']
+        values = [r[0],r[2],r[1],r[4],r[3]]
+        data.append([dict(zip(keys,values))])
+
+    reviews = {"results": data}
+    return jsonify(reviews)
 
 
 @flipkart.route("results/<string:q>", methods=['POST', 'GET'])
@@ -50,6 +64,10 @@ def getResults(q):
         id = str(s['url'])[pos1:pos2]
         id = id.replace('?pid=','').replace('&lid=','')
         p_id.append(id)
+        products_chk = query_db("SELECT pid from products WHERE pid=%s", (id,))
+        if not products_chk:
+            execute_db("INSERT INTO products(pid,name,url) VALUES (%s,%s,%s)",(id,s['name'],s['url'],))
+
     data = zip(p_name,p_id,p_url)
 
     return render_template('flipkart.html',**locals())
