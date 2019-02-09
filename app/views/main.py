@@ -7,4 +7,8 @@ main = Blueprint('main', __name__)
 
 @main.route("/", methods=['POST', 'GET'])
 def index():
-    return render_template("dashboard.html")
+    return render_template("index.html")
+
+@main.route("/search", methods=['POST', 'GET'])
+def search():
+    pass
