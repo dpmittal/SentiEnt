@@ -39,13 +39,28 @@ def getReviews(pid):
     data =[]
 
     reviews = query_db("SELECT * from reviews WHERE pid=%s", (pid,))
+    positive = 0
+    negative = 0
+    slightly_negative = 0
+    slightly_positive = 0
+    neutral = 0
     for r in reviews:
         keys=['pid','title','text','created','polarity']
         values = [r[0],r[2],r[1],r[4],r[3]]
+        if r[3]>0.5:
+            positive+=1
+        elif r[3]<0.5 and r[3]>0:
+            slightly_positive+=1
+        elif r[3]==0:
+            neutral+=1
+        elif r[3]>-0.5 and r[3]<0:
+            slightly_negative+=1
+        else:
+            negative+=1
         data.append([dict(zip(keys,values))])
 
-    reviews = {"results": data}
-    return jsonify(reviews)
+    reviews = data
+    return render_template('reviews.html', **locals())
 
 
 @flipkart.route("results/<string:q>", methods=['POST', 'GET'])
@@ -60,6 +75,7 @@ def getResults(q):
     string = soup.find('script', {'id':'jsonLD'}).text
     string = json.loads(string)
     string = string['itemListElement']
+    query = ' '.join(q.split('+'))
     for s in string:
         p_name.append(s['name'])
         p_url.append(s['url'])
@@ -74,11 +90,7 @@ def getResults(q):
             saveReviews(id)
 
         tv = query_db("SELECT AVG(polarity) FROM reviews WHERE pid=%s",(id,))
-        if tv:
+        if tv[0][0] is not None:
             trust_value.append(round(tv[0][0],2))
-
     data = zip(p_name,p_id,p_url,trust_value)
-
-    return render_template('flipkart.html',**locals())
-
-
+    return render_template('results.html',**locals())

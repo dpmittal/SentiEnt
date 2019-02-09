@@ -22,15 +22,14 @@
             </tr>
           </thead>
           <tbody>
-            {% if results %}
-                {% for name,pid,url in data %}
+                {% for i in range(p_id|length) %}
                 <tr>
                   <td>
                   </td>
                   <td class="text-center">
-                    <a href="{{url_for('flipkart.getReviews',pid=pid)}}">{{name}}</a>
+                    <a href="{{url_for('flipkart.getReviews',pid=p_id[i])}}">{{p_name[i]}}</a>
                     <br>
-                    <small><a href="{{ url }}">Product Link : </a><br><br></small>
+                    <small><a href="{{ p_url[i] }}">Product Link : </a><br><br></small>
                   </td>
                   <td>
                   </td>
@@ -43,12 +42,10 @@
                   </td>
                 </tr>
                 {% endfor %}
-            {% endif %}
-
           </tbody>
         </table>
     </div>
   </div>
-</div
+</div>
 
 {% endblock %}
