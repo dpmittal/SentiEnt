@@ -13,6 +13,7 @@ flipkart = Blueprint('flipkart', __name__,url_prefix='/scrap/flipkart')
 @flipkart.route("reviews/<string:pid>", methods=['POST', 'GET'])
 def getReviews(pid):
     data = []
+    
 
     products = query_db("SELECT * from products WHERE pid=%s", (pid,))
     reviews = query_db("SELECT pid from reviews WHERE pid=%s", (pid,))
@@ -46,14 +47,14 @@ def getReviews(pid):
     neutral = 0
     for r in reviews:
         keys=['pid','title','text','created','polarity']
-        values = [r[0],r[2],r[1],r[4],r[3]]
-        if r[3]>0.5:
+        values = [r[1],r[3],r[2],r[5],r[4]]
+        if r[4]>0.5:
             positive+=1
-        elif r[3]<0.5 and r[3]>0:
+        elif r[4]<0.5 and r[4]>0:
             slightly_positive+=1
-        elif r[3]==0:
+        elif r[4]==0:
             neutral+=1
-        elif r[3]>-0.5 and r[3]<0:
+        elif r[4]>-0.5 and r[4]<0:
             slightly_negative+=1
         else:
             negative+=1
