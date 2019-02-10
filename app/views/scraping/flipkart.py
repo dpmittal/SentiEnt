@@ -13,7 +13,7 @@ flipkart = Blueprint('flipkart', __name__,url_prefix='/scrap/flipkart')
 @flipkart.route("reviews/<string:pid>", methods=['POST', 'GET'])
 def getReviews(pid):
     data = []
-    
+
 
     products = query_db("SELECT * from products WHERE pid=%s", (pid,))
     reviews = query_db("SELECT pid from reviews WHERE pid=%s", (pid,))
@@ -45,16 +45,17 @@ def getReviews(pid):
     slightly_negative = 0
     slightly_positive = 0
     neutral = 0
+    # print(reviews)
     for r in reviews:
         keys=['pid','title','text','created','polarity']
-        values = [r[1],r[3],r[2],r[5],r[4]]
-        if r[4]>0.5:
+        values = [r[0],r[1],r[2],r[4],r[3]]
+        if r[3]>0.5:
             positive+=1
-        elif r[4]<0.5 and r[4]>0:
+        elif r[3]<0.5 and r[3]>0:
             slightly_positive+=1
-        elif r[4]==0:
+        elif r[3]==0:
             neutral+=1
-        elif r[4]>-0.5 and r[4]<0:
+        elif r[3]>-0.5 and r[3]<0:
             slightly_negative+=1
         else:
             negative+=1
@@ -77,6 +78,7 @@ def getResults(q):
     string = json.loads(string)
     string = string['itemListElement']
     query = ' '.join(q.split('+'))
+    polarities = []
     for s in string:
         p_name.append(s['name'])
         p_url.append(s['url'])
@@ -91,12 +93,13 @@ def getResults(q):
             saveReviews(id)
 
         polarity=query_db("SELECT polarity from reviews WHERE pid=%s", (id,))
-        polarities = []
+        polarity_ = []
         for review in polarity:
              for poles in review:
-                polarities.append(round(poles, 4))
+                polarity_.append(round(poles, 4))
         tv = query_db("SELECT AVG(polarity) FROM reviews WHERE pid=%s",(id,))
         if tv[0][0] is not None:
             trust_value.append(round(tv[0][0],2))
+        polarities.append(polarity_)
     data = zip(p_name,p_id,p_url,trust_value)
     return render_template('results.html',**locals())

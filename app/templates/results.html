@@ -36,10 +36,12 @@
                   <td>
                   </td>
                   <td class="text-right"> <b>
-                    {% if polarities[i] >=0 %}
-                    {{polarities[i] *100}}% <br>
-                    {% else %}
-                    {{100- polarities[i]*100}}%
+                    {% if polarities[i]|count !=0%}
+                      {% if polarities[i]|sum / polarities[i]|count  >=0 %}
+                        {{ (polarities[i]|sum / polarities[i]|count)|round(1) *100}}% <br>
+                      {% else %}
+                        {{ (100 - polarities[i]|sum / polarities[i]|count) | round(1)*100}}%
+                      {% endif %}
                     {% endif %}
                   </b>
                   </td>

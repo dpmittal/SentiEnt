@@ -22,6 +22,7 @@ def search():
 def reviews(pid):
     url = 'http://0.0.0.0:4000'+url_for('flipkart.getReviews', pid=pid)
     reviews = requests.get(url, verify=False).json()
+    print(reviews)
     positive = reviews['positive']
     negative = reviews['negative']
     neutral = reviews['neutral']
