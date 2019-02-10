@@ -67,7 +67,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#">SentiENT</a>
+            <a class="navbar-brand" href="#" style="font:30px">SentiENT</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -84,10 +84,99 @@
 
 </div> -->
       <div class="content">
-        {% block main %}
-        {% endblock %}
+       <!--  {% block main %}
+       {% endblock %} -->
+       <div class="row">
+             <div class="col-md-8">
+            <div class="card" >
+              <div class="card-header ">
+                <h5 class="card-title">What is SentiENT</h5>
+                
+              </div>
+              <div class="card-body " >
+                <p >SentiEnt is a system that analyses large amount of reviews of a product on e-commerce sites gathers sentiment pertaining to the product and represents the trends in an intelligible and attractive form.</p>
+                
+              </div>
+
+              <div class="card-footer ">
+              </div>
+           </div>
+
+           <div class="card" >
+              <div class="card-header ">
+                <h5 class="card-title">Why does it matter ? </h5>
+                
+              </div>
+              <div class="card-body " >
+                <p >According to an online survey, 88% of consumers trust online reviews as much as personal recommendations. Nearly 9 in 10 consumers have read online reviews to determine the quality of a local business, and 39% do so on a regular basis.The survey shows how much more regularly people are reading reviews, clearly highlighting the need for local businesses to attract more reviews and actively manage their online reputation.<br><br>
+
+    So we can infer that in the present scenario, customer reviews can make or break e-commerce industry and it is essential for the stake-holders to monitor the sentiment trends for improvement of user experience.<br><br>
+
+    SentiKart provides a solution to e-commerce sites to easily monitor trends. Meanwhile, also giving an interface to prospective buyers to search a product in our database to see sentiments of thousands of reviews without going through them manually.</p>
+                
+              </div>
+
+              <div class="card-footer ">
+              </div>
+           </div>
+           </div>
+
+             <div class="col-md-4">
+            <div class="card ">
+              <div class="card-header ">
+                <h5 class="card-title">Statistics</h5>
+                <p class="card-category">Analysis based on User Reviews</p>
+              </div>
+              <div class="card-body ">
+                <canvas id="chartEmail1" class="ct-chart ct-perfect-fourth" width="456" height="300"></canvas>
+              </div>
+              <div class="card-footer ">
+              <div class="legend">
+                            <i class="fa fa-circle text-info" ></i>
+                            Positive
+                          </div>
+                          <div class="legend">
+                            <i class="fa fa-circle text-warning" ></i>
+                            Slightly Positive
+                          </div>
+                          <div class="legend">
+                            <i class="fa fa-circle text-danger"></i>
+                            Negative
+                          </div>
+                          <div class="legend">
+                            <i class="fa fa-circle text-success "></i>
+                            Slightly Negative
+                          </div>
+                          <div class="legend">
+                            <i class="fa fa-circle text-dark"></i>
+                            Neutral
+                          </div>
+                              </div> 
+           </div>
+           </div>
+
+       </div>
+
+        <div class="row">
+             <div class="col-md-12 ">
+            <div class="card ">
+              <div class="card-header ">
+                <h5 class="card-title">How to use SentiENT ?</h5>
+                <p> </p>
+              </div>
+              <div class="card-body ">
+                
+              </div>
+              <div class="card-footer ">
+              </div>
+           </div>
+           </div>
+
+             
+
+       </div>
       </div>
-      
+
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">
@@ -168,14 +257,77 @@
             pointRadius: 0,
             pointHoverRadius: 0,
             backgroundColor: [
-              '#4acccd',
-              '#EDD99F',
-              '#BB9F7D',
-              '#fcc468',
-              '#e3e3e3'
+              ' #17a2b8',
+              '#ffc107',
+              '#dc3545',
+              '#28a745',
+              '#343a40'
             ],
             borderWidth: 0,
             data: [{{ positive }}, {{ slightly_positive }}, {{ negative }}, {{ slightly_negative }}, {{ neutral }}]
+          }]
+        },
+        options: {
+
+          legend: {
+
+            display: false
+          },
+
+          tooltips: {
+            enabled: true
+          },
+
+          scales: {
+            yAxes: [{
+
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                drawBorder: false,
+                zeroLineColor: "transparent",
+                color: 'rgba(255,255,255,0.05)'
+              }
+
+            }],
+
+            xAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(255,255,255,0.1)',
+                zeroLineColor: "transparent"
+              },
+              ticks: {
+                display: false,
+              }
+            }]
+          },
+        }
+      });
+    });
+
+    $(document).ready(function() {
+      ctx = document.getElementById('chartEmail1').getContext("2d");
+
+      myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Positive','Slightly Positive','Negative','Slightly Negative','Neutral'],
+          datasets: [{
+            label: "Reviews",
+            pointRadius: 0,
+            pointHoverRadius: 0,
+            backgroundColor: [
+               ' #17a2b8',
+              '#ffc107',
+              '#dc3545',
+              '#28a745',
+              '#343a40'
+            ],
+            borderWidth: 0,
+            data: [40,10,20,13,17]
           }]
         },
         options: {

@@ -60,10 +60,14 @@
                           <td> <b> {{ review[0]['title'] }} </b> - {{ review[0]['text'] }}</td>
                           <td class="text-right">
                             {% if review[0]['polarity'] %}
-                              {% if review[0]['polarity'] > 0 %}
+                              {% if review[0]['polarity'] > 0.5 %}
                                 Positive
-                              {% elif review[0]['polarity'] < 0 %}
+                              {% elif review[0]['polarity'] < -0.5 %}
                                 Negative
+                               {% elif review[0]['polarity'] >0 %}
+                                Slightly Positive
+                                {% elif review[0]['polarity'] < 0 %}
+                                Slightly Negative
                               {% else %}
                                 Neutral
                               {% endif %}
