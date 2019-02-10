@@ -43,13 +43,13 @@
           <li {% if request.path == url_for('main.index') %}class="active"{% endif %}>
             <a href="{{ url_for('main.index') }}">
               <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
+              <h5>Dashboard</h5>
             </a>
           </li>
           <li {% if request.path == url_for('main.search') %}class="active"{% endif %}>
             <a href="{{ url_for('main.search') }}">
               <i class="nc-icon nc-zoom-split"></i>
-              <p>Search</p>
+              <h5>Search</h5>
             </a>
           </li>
         </ul>
@@ -67,7 +67,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#">SentiENT</a>
+            <a class="navbar-brand" href="#">SentiENT- Analysing reviews of products and services to present the best statistics.</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -87,7 +87,7 @@
         {% block main %}
         {% endblock %}
       </div>
-      
+
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">
