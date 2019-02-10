@@ -43,13 +43,13 @@
           <li {% if request.path == url_for('main.index') %}class="active"{% endif %}>
             <a href="{{ url_for('main.index') }}">
               <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
+              <h5>Dashboard</h5>
             </a>
           </li>
           <li {% if request.path == url_for('main.search') %}class="active"{% endif %}>
             <a href="{{ url_for('main.search') }}">
               <i class="nc-icon nc-zoom-split"></i>
-              <p>Search</p>
+              <h5>Search</h5>
             </a>
           </li>
         </ul>
@@ -67,7 +67,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#" style="font:30px">SentiENT</a>
+            <a class="navbar-brand" href="#" style="font:30px">SentiENT- Analysing reviews of products and services to present the best statistics.</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -90,11 +90,11 @@
              <div class="col-md-8">
             <div class="card" >
               <div class="card-header ">
-                <h5 class="card-title">What is SentiENT</h5>
+                <h4 class="card-title">What is SentiENT</h4>
                 
               </div>
               <div class="card-body " >
-                <p >SentiEnt is a system that analyses large amount of reviews of a product on e-commerce sites gathers sentiment pertaining to the product and represents the trends in an intelligible and attractive form.</p>
+                <p class="text-dark" style="font-size:16px;">SentiEnt is a system that analyses large amount of reviews of a product on e-commerce sites gathers sentiment pertaining to the product and represents the trends in an intelligible and attractive form.</p>
                 
               </div>
 
@@ -104,11 +104,11 @@
 
            <div class="card" >
               <div class="card-header ">
-                <h5 class="card-title">Why does it matter ? </h5>
+                <h4 class="card-title">Why does it matter ? </h4>
                 
               </div>
               <div class="card-body " >
-                <p >According to an online survey, 88% of consumers trust online reviews as much as personal recommendations. Nearly 9 in 10 consumers have read online reviews to determine the quality of a local business, and 39% do so on a regular basis.The survey shows how much more regularly people are reading reviews, clearly highlighting the need for local businesses to attract more reviews and actively manage their online reputation.<br><br>
+                <p class="text-dark" style="font-size:16px;">According to an online survey, 88% of consumers trust online reviews as much as personal recommendations. Nearly 9 in 10 consumers have read online reviews to determine the quality of a local business, and 39% do so on a regular basis.The survey shows how much more regularly people are reading reviews, clearly highlighting the need for local businesses to attract more reviews and actively manage their online reputation.<br><br>
 
     So we can infer that in the present scenario, customer reviews can make or break e-commerce industry and it is essential for the stake-holders to monitor the sentiment trends for improvement of user experience.<br><br>
 
@@ -124,8 +124,8 @@
              <div class="col-md-4">
             <div class="card ">
               <div class="card-header ">
-                <h5 class="card-title">Statistics</h5>
-                <p class="card-category">Analysis based on User Reviews</p>
+                <h3 class="card-title">Statistics</h3>
+               
               </div>
               <div class="card-body ">
                 <canvas id="chartEmail1" class="ct-chart ct-perfect-fourth" width="456" height="300"></canvas>
@@ -161,8 +161,8 @@
              <div class="col-md-12 ">
             <div class="card ">
               <div class="card-header ">
-                <h5 class="card-title">How to use SentiENT ?</h5>
-                <p> </p>
+                <h4 class="card-title">How to use SentiENT ?</h4>
+                <p class="text-dark" style="font-size:16px;">Step 1: Search for the product you are looking for at the top left corner.<br>Step 2: A list of the searched product appears in their trending order. on it's right, percentage of positive reviews appears.<br>Step 3: You can click on the link of a particular product from the list to get it's detailed analysis. In order to make it easy to understand there's a pie-chart having different categories.</p>
               </div>
               <div class="card-body ">
                 
