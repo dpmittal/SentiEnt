@@ -9,7 +9,7 @@ A Flask based Web Application which collects product reviews from various e-comm
 
 1. Flask/Python
 2. HTML, CSS, JS
-3. PlSQL
+3. PLSQL
 4. GraphQL
 
 ## Working:-
