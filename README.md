@@ -1,5 +1,5 @@
 
-# Makeathon '19 by Team  \_\_init\_\_
+# SentiEnt - Sentiment Analyser of product reviews various E-Commerce websites
 
 ## Overview:- 
 
