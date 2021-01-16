@@ -22,12 +22,12 @@
             </tr>
           </thead>
           <tbody>
-                {% for i in range(p_id|length) %}
+                {% for i in range(pids|length) %}
                 <tr>
                   <td>
                   </td>
                   <td class="text-center">
-                    <a href="{{url_for('main.reviews',pid=p_id[i])}}">{{p_name[i]}}</a>
+                    <a href="{{url_for('main.reviews',pid=pids[i])}}">{{p_name[i]}}</a>
                     <br>
                     <small><a href="{{ p_url[i] }}">Product Link : </a><br><br></small>
                   </td>

@@ -24,3 +24,30 @@ A Flask based Web Application which collects product reviews from various e-comm
     *  ```  makeathon/app/__init__.py```
     
 ##### _Development of the API for the project is still work under progress but any user can extract the required amount of data from the DB with the help of a desired query from GraphQL in the url ``` /graphql ``` in the web app._
+
+
+Here are some screenshots of the web app.
+
+## Screenshots
+
+<img src="https://i.imgur.com/RjtL282.png" width="700">
+<br>
+
+<img src="https://i.imgur.com/PlmLp6J.png" width="700">
+<br>
+
+<img src="https://i.imgur.com/qFyU0T4.png" width="700">
+<br>
+
+<img src="https://i.imgur.com/p0IMtFT.png" width="700">
+<br>
+
+<img src="https://i.imgur.com/SvzrOJs.png" width="700">
+<br>
+
+<img src="https://i.imgur.com/LHr1WDk.png" width="700">
+<br>
+
+
+
+
