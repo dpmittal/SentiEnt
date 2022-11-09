@@ -63,14 +63,14 @@ def getReviews(pid):
     neutral = 0
     for r in reviews:
         keys=['pid','title','text','created','polarity']
-        values = [r[1],r[2],r[3],r[5],r[4]]
-        if r[4]>0.5:
+        values = [r[0],r[1],r[2],r[4],r[3]]
+        if r[3]>0.5:
             positive+=1
-        elif r[4]<0.5 and r[4]>0:
+        elif r[3]<0.5 and r[3]>0:
             slightly_positive+=1
-        elif r[4]==0:
+        elif r[3]==0:
             neutral+=1
-        elif r[4]>-0.5 and r[4]<0:
+        elif r[3]>-0.5 and r[3]<0:
             slightly_negative+=1
         else:
             negative+=1
